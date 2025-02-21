@@ -1,7 +1,7 @@
 export function datas () {
     let consumptionArr = [];
-    consumptionArr.push(["Barbie", "", "movie",""]);
-    consumptionArr.push(["A babysitter guide to monster hunting", "Netflix", "movie",""]);
+    consumptionArr.push(["Barbie", "", "movie","", 1999]);
+    consumptionArr.push(["A babysitter guide to monster hunting", "Netflix", "movie","",2012]);
     return consumptionArr;
 }
 

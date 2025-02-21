@@ -1,0 +1,70 @@
+body {
+    background-color: #ffffff;
+
+    .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .popup {
+        background: white;
+        padding: 30px;
+        width: 500px;
+        margin: 100px auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+    }
+    #close {
+        width: 100px;
+    }
+    .popup input {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 8px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 30px;
+        flex-wrap: nowrap;
+        flex: 1;
+    }
+
+    .childHead {
+        color: black;
+        font-size: 20px;
+        text-decoration: 10px;
+    }
+    .arrow {
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    .rotated {
+        transform: rotate(90deg);
+    }
+    .childHeader {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 30px;
+        flex-wrap: nowrap;
+        flex: 1;
+    }
+    .childTable {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 30px;
+        flex-wrap: nowrap;
+        flex: 1;
+    }
+}

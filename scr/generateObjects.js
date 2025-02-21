@@ -1,28 +1,39 @@
 import {datas} from "./datas.js";
+import {getDatasFromPopup} from "./getDatasFromPopup.js";
 
 let consumptions = {
-    movie: {},
+    movie: {}, //alernativ mit array aber mal sehen
     serie: {},
 };
 
-let consumption = {};
+const consumption = getDatasFromPopup();
+console.log("sing",consumption)
+if (consumption.typ === "movie"){
+    consumptions.movie[consumption.title] = {...consumption};
+} else {
+    consumptions.serie[consumption.title] = {...consumption};
+}
+console.log("plu",consumptions)
 
-const consumptionArr = datas();  // Nimmt an, dass `datas()` ein Array von Arrays zurückgibt.
 
 
-for (let i = 0; i < consumptionArr.length; i++) {
+//const consumptionArr = datas();  // Nimmt an, dass `datas()` ein Array von Arrays zurückgibt.
+
+
+/*for (let i = 0; i < consumptionArr.length; i++) {
     consumption.title = consumptionArr[i][0];
     consumption.stream = consumptionArr[i][1];
     consumption.typ = consumptionArr[i][2];
     consumption.others = consumptionArr[i][3];
+    consumption.date = consumptionArr[i][4];
     if (consumption.typ === "movie") {
         consumptions.movie[consumption.title] = {...consumption};
     } else {
         consumptions.serie[consumption.title] = {...consumption};
     }
-}
+}*/
 
-export function generateAndSort() {
+/*export function generateAndSort() {
     for (let category in consumptions) {
         if (consumptions.hasOwnProperty(category)) {
             consumptions[category] = Object.keys(consumptions[category])
@@ -34,8 +45,6 @@ export function generateAndSort() {
         }
     }
     return consumptions;
-}
-
-console.log(generateAndSort())
+}*/
 
 

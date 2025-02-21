@@ -8,28 +8,31 @@
     <link rel="stylesheet" href="index.css">
 </head>
 
-
 <body>
 <div>
     <h1>database for media consumption</h1>
 </div>
 
-<button onclick="openPopup()">Hinzufügen</button>
+<button id="toAdd">to add</button>
 <div class="popup-overlay" id="popupOverlay">
     <div class="popup">
-        <h3>Neuen Eintrag hinzufügen</h3>
-        <input type="text" id="input1" placeholder="Eingabe 1">
-        <input type="text" id="input2" placeholder="Eingabe 2">
-        <button onclick="closePopup()">Schließen</button>
+        <h3>create a new input</h3>
+        <input type="text" id="titleInput" placeholder="title (not null)">
+        <input type="text" id="streamInput" placeholder="stream">
+        <input type="number" id="dateInput" placeholder="date">
+        <input type="text" id="typInput" placeholder="typ">
+        <input type="text" id="discriptionInput" placeholder="discription">
+        <button id="close">close</button>
+        <button id="saveInput">save</button>
     </div>
 </div>
 
-<div id="container">
-</div>
+<div id="container"></div>
 
 <!-- JavaScript-Datei einbinden -->
-<script type="module" src="scr/generateObjects.js"></script>
-<script type="module" src="scr/createOutput.js"></script>
+<script type="module" src="scr/server.js"></script>
 <script type="module" src="scr/openPopUp.js"></script>
+<script type="module" src="scr/getDatasFromPopup.js"></script>
 </body>
 </html>
+
