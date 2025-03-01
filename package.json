@@ -1,13 +1,16 @@
 {
-  "name": "LSH-Potsdam",
-  "version": "1.0.0",
+  "name": "lsh-potsdam",
   "type": "module",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.0",
+  "main": "src/createHeader.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
   },
-  "private": true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",

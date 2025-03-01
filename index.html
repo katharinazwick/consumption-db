@@ -13,26 +13,65 @@
     <h1>database for media consumption</h1>
 </div>
 
+<select id="chooseStream">
+    <option>stream</option>
+    <option>Disney</option>
+    <option>Netflix</option>
+    <option>Amazon</option>
+</select>
+
+<select id="incomplete">
+    <option>all</option>
+    <option>incomplete</option>
+</select>
+
+<select id="sort">
+    <option>sort</option>
+    <option>viewing Year ascending</option>
+    <option>viewing Year descending</option>
+</select>
+
+<!--popup-->
 <button id="toAdd">to add</button>
 <div class="popup-overlay" id="popupOverlay">
     <div class="popup">
         <h3>create a new input</h3>
-        <input type="text" id="titleInput" placeholder="title (not null)">
-        <input type="text" id="streamInput" placeholder="stream">
-        <input type="number" id="dateInput" placeholder="date">
-        <input type="text" id="typInput" placeholder="typ">
-        <input type="text" id="discriptionInput" placeholder="discription">
+        <div id="field"></div>
+        <div id="label">
+            <select id="typInput">
+                <option>movie</option>
+                <option>serie</option>
+                <option>audiobook</option>
+            </select>
+            <select id="streamInput">
+                <option value="" selected>stream</option>
+                <option>Netflix</option>
+                <option>Disney</option>
+                <option>Amazon</option>
+            </select>
+            <label for="box">incomplete or need for review:</label>
+            <input type="checkbox" id="box" class="box"></input>
+        </div>
+        <p></p>
         <button id="close">close</button>
         <button id="saveInput">save</button>
     </div>
 </div>
 
+<p></p>
+
 <div id="container"></div>
+<p></p>
+<div id="table">
+</div>
 
 <!-- JavaScript-Datei einbinden -->
-<script type="module" src="scr/server.js"></script>
-<script type="module" src="scr/openPopUp.js"></script>
-<script type="module" src="scr/getDatasFromPopup.js"></script>
+<script type="module" src="src/server.js"></script>
+<script type="module" src="src/createHeader.js"></script>
+<script type="module" src="src/createPopup.js"></script>
+<script type="module" src="src/openPopUp.js"></script>
+<script type="module" src="src/getDatasFromPopup.js"></script>
+<script type="module" src="src/index.js"></script>
 </body>
 </html>
 

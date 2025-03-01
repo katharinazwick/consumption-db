@@ -4,9 +4,8 @@ if(add){
 }
 
 const close = document.getElementById("close");
-const save = document.getElementById("saveInput");
 
-if(close || save){
+if(close){
     close.addEventListener("click", closePopup);
 }
 
