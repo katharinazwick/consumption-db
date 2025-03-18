@@ -9,7 +9,7 @@ if(close){
     close.addEventListener("click", closePopup);
 }
 
-function openPopup() {
+export function openPopup() {
     document.getElementById("popupOverlay").style.display = "block";
 }
 function closePopup() {

@@ -6,6 +6,7 @@ title.placeholder = "title *";
 Object.assign(title.style, {
     border: "1px solid grey",
     width: "100%",
+    boxSizing: "border-box",
 })
 
 const description = document.createElement("textarea");
@@ -14,6 +15,7 @@ description.placeholder = "description";
 Object.assign(description.style, {
     border: "1px solid grey",
     width: "100%",
+    boxSizing: "border-box",
     height: "100Px",
     resize: "none",
 });

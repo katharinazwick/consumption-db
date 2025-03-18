@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import pg from "pg";
+import * as path from "node:path";
 
 const app = express();
 const port = 3000;
@@ -8,7 +9,6 @@ const port = 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-
 // Verbindung zur PostgreSQL-Datenbank
 const pool = new pg.Pool({
     user: "postgres",
@@ -17,13 +17,16 @@ const pool = new pg.Pool({
     password: "01042024Kz",
     port: 5432,
 });
+
 //HTML laden und zurücksetzen bei aufrufen von / !?!?
+app.use(express.static(path.join(import.meta.dirname, 'frontend')))
+
 // API-Endpunkt zum Speichern der Daten
 app.post("/add-entry", async (req, res) => {
-    const { title, viewingYear, stream, typ, description, incomplete } = req.body;
+    const {title, viewingYear, stream, typ, description, incomplete} = req.body;
 
     if (!title) {
-        return res.status(400).json({ error: "Title darf nicht leer sein!" });
+        return res.status(400).json({error: "Title darf nicht leer sein!"});
     }
 
     try {
@@ -34,7 +37,7 @@ app.post("/add-entry", async (req, res) => {
         res.json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Speichern!" });
+        res.status(500).json({error: "Fehler beim Speichern!"});
     }
 });
 
@@ -43,12 +46,33 @@ app.listen(port, () => {
 });
 
 // API-Endpunkt zum Abrufen der gespeicherten Daten
+
 app.get("/get-entries", async (req, res) => {
+    const {incompleteFilter, typFilter, streamFilter} = req.query;
+
+    const filterArray = [];
+    const filterValueArray = []
+
     try {
-        const result = await pool.query("SELECT * FROM movie ORDER BY title ASC");
+        let sqlStatement = "SELECT * FROM movie";
+
+        const arrayDynamic = {incomplete: incompleteFilter, typ: typFilter, stream: streamFilter};
+
+        for (let key in arrayDynamic) {
+            if (arrayDynamic[key]) {
+                filterArray.push(`${key} = $${filterArray.length + 1}`);
+                filterValueArray.push(arrayDynamic[key]);
+            }
+        }
+
+        if (filterArray.length > 0) {
+            sqlStatement += ` WHERE ` + filterArray.join(" AND ");
+        }
+console.log(sqlStatement);
+        const result = await pool.query(sqlStatement, filterValueArray);
         res.json(result.rows);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Abrufen der Daten!" });
+        res.status(500).json({error: "Fehler beim Abrufen der Daten!"});
     }
 });

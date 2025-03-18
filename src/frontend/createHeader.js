@@ -1,22 +1,25 @@
 const divContainer = document.getElementById("container");
+divContainer.className ="headerContainer";
 Object.assign(divContainer.style,
     {
         display: "flex",
         flexDirection: "rows",
     })
 
-const temp = ["title", "viewing year", "stream"];
+const temp = ["title", "viewing year", "stream", "description"];
 
-for (let i = 0; i < temp.length; i++) {
+temp.forEach((element) => {
     const divHeaders = document.createElement("div");
     divHeaders.className = "childHeaders"
-    divHeaders.innerText = temp[i];
-    divHeaders.id = temp[i];
+    divHeaders.innerText = element;
     divHeaders.style.height= "30px";
-    if (i === 0) {
-        divHeaders.style.width = "60%";
-    } else {
+    divHeaders.style.padding= "2px";
+    if (element === "title") {
+        divHeaders.style.width = "50%";
+    } else if (element === "description") {
         divHeaders.style.width = "20%";
+    } else {
+        divHeaders.style.width = "15%";
     }
     Object.assign(divHeaders.style, {
         border: "1px solid grey",
@@ -27,4 +30,4 @@ for (let i = 0; i < temp.length; i++) {
         color: "grey",
     });
     divContainer.appendChild(divHeaders);
-}
+})
