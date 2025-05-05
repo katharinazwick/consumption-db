@@ -1,0 +1,15 @@
+services:
+  moviespostgres:
+    image: postgres:17
+    restart: on-failure
+    ports:
+      - "${DB_PORT}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pgdatamovies:/var/lib/postgresql/data
+
+volumes:
+  pgdatamovies:

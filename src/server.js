@@ -14,8 +14,8 @@ const pool = new pg.Pool({
     user: "postgres",
     host: "localhost",
     database: "consumption",
-    password: "01042024Kz",
-    port: 5432,
+    password: "ijkhgzuioztrztui78uijkkhuzi76tuzuoi",
+    port: 5433,
 });
 
 //HTML laden und zurücksetzen bei aufrufen von / !?!?
