@@ -10,15 +10,8 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 // Verbindung zur PostgreSQL-Datenbank
-const pool = new pg.Pool({
-    user: "postgres",
-    host: "localhost",
-    database: "consumption",
-    password: "ijkhgzuioztrztui78uijkkhuzi76tuzuoi",
-    port: 5433,
-});
 
-//HTML laden und zurücksetzen bei aufrufen von / !?!?
+
 app.use(express.static(path.join(import.meta.dirname, 'frontend')))
 
 // API-Endpunkt zum Speichern der Daten
