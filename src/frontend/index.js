@@ -1,25 +1,21 @@
-import {loadData} from "./outputTable.js";
-
-loadData("", "", "");
+import { loadData } from "./outputTable.js";
 
 const incomplete = document.getElementById("incomplete");
 const chooseTyp = document.getElementById("chooseTyp");
 const chooseStream = document.getElementById("chooseStream");
+const chooseSort = document.getElementById("sort");
 
-chooseStream.addEventListener("change", function () {
-    loadData(chooseStream.value, incomplete.value, chooseTyp.value);
-});
+export function reloadTable() {
+    loadData(chooseStream.value, incomplete.value, chooseTyp.value, chooseSort.value);
+}
 
-incomplete.addEventListener("change", function () {
-    loadData(chooseStream.value, incomplete.value, chooseTyp.value);
-});
+// Initiales Laden
+reloadTable();
 
-chooseTyp.addEventListener("change", function () {
-    loadData(chooseStream.value, incomplete.value, chooseTyp.value);
-})
+// Event-Listener für Filter
+chooseStream.addEventListener("change", reloadTable);
+incomplete.addEventListener("change", reloadTable);
+chooseTyp.addEventListener("change", reloadTable);
+chooseSort.addEventListener("change", reloadTable);
 
-/*const sortValue = document.getElementById("sort");
-sortValue.addEventListener("change", function () {
-    sort(data, sortValue.value);
-    loadData(data,chooseStream.value, incomplete.value,chooseTyp.value);
-})*/
+
