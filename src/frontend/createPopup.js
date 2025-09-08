@@ -31,3 +31,15 @@ Object.assign(viewing.style, {
 field.appendChild(title);
 field.appendChild(description);
 field.appendChild(viewing);
+
+// Warten, bis DOM geladen ist, dann Inputs für Navigation vorbereiten
+document.addEventListener("DOMContentLoaded", () => {
+    window.popupInputs = [
+        document.getElementById("titleInput"),
+        document.getElementById("descriptionInput"),
+        document.getElementById("viewingYearInput"),
+        document.getElementById("typInput"),
+        document.getElementById("streamInput"),
+        document.getElementById("box")
+    ];
+});
