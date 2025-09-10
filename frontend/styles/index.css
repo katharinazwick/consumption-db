@@ -1,5 +1,7 @@
 body {
     background-color: #ffffff;
+    height: 100%;
+    margin: 0;
 
     .popup-overlay {
         display: none;
@@ -52,11 +54,39 @@ body {
         padding: 10px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+
     }
     .headerContainer {
         position: sticky;
         top: 40px;
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(2px);
+    }
+
+    #jpg {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: 100vh;
+        background: url("marvel.jpg") no-repeat center center;
+        background-size: cover;
+    }
+
+    #window
+    {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #table {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background: rgba(143, 143, 143, 0.4);
+    }
+
+    #marvelButton{
+        height: 40px
     }
 }
