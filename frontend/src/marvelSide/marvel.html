@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>database for media consumption</title>
+     <link rel="stylesheet" href="../../styles/index.css">
+ </head>
+
+ <body>
+ <div class="toolbar">
+     <h1>Marvel Cinemativ Universum</h1>
+     <button id="marvelButton">to add</button>
+ </div>
+
+ <!--popup-->
+ <div class="popup-overlay" id="popupOverlay">
+     <div class="popup">
+         <h3>create a new input</h3>
+         <div id="field"></div>
+         <div id="label">
+             <select id="universumInput">
+                 <option value="" selected>Universum</option>
+                 <option>Marvel Cinemativ Universum </option>
+                 <option>Spiderman Universum</option>
+             </select>
+         </div>
+         <p></p>
+         <button id="close">close</button>
+         <button id="saveInput">save</button>
+     </div>
+ </div>
+
+ <div id ="jpg" >
+     <div id = "window"> </div>
+     <p></p>
+     <div id = "table"> </div>
+ </div>
+
+
+ <!-- JavaScript-Datei einbinden -->
+ <script type="module" src="mS_createHeader.js"></script>
+<script type="module" src="mS_index.js"></script>
+<script type="module" src="mS_openPopup.js"></script>
+<script type="module" src="mS_createPopup.js"></script>
+</body>
+</html>
