@@ -11,7 +11,7 @@ export async function loadData(chooseStream, incomplete, chooseTyp, chooseSort) 
 
     const response = await fetch(`http://localhost:3000/get-entries?${searchParams.toString()}`);
     const data = await response.json();
-
+console.log(data);
     const divTable = document.getElementById("table");
     divTable.innerHTML = "";
 
