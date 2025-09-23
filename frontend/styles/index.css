@@ -64,17 +64,20 @@ body {
         backdrop-filter: blur(2px);
     }
 
+    /*marvel*/
+
     #jpg {
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
         height: 100vh;
-        background: url("marvel.jpg") no-repeat center center;
+        background: url("../../frontend/styles/marvel.jpg") no-repeat center center;
         background-size: cover;
     }
 
     #window
     {
+
         display: flex;
         flex-direction: row;
     }

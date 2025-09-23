@@ -7,20 +7,16 @@ Object.assign(divContainer.style,
     })
 
 const temp = ["position", "title", "universum", "year", "options"];
+const widths = ["10%", "40%", "20%", "20%", "10%"];
 
-temp.forEach((element) => {
+temp.forEach((element, index) => {
     const divHeaders = document.createElement("div");
     divHeaders.className = "childHeaders"
     divHeaders.innerText = element;
     divHeaders.style.height= "30px";
     divHeaders.style.padding= "2px";
-    if (element === "title") {
-        divHeaders.style.width = "40%";
-    } else if (element === "positon") {
-        divHeaders.style.width = "10%";
-    } else {
-        divHeaders.style.width = "20%";
-    }
+        divHeaders.style.width = widths[index];
+
 
     Object.assign(divHeaders.style, {
         border: "1px solid grey",

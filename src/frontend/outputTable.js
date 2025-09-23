@@ -145,7 +145,7 @@ console.log(data);
                 if (index === 2) { // 2 = Index für 'stream'
                     // Dropdown für Stream
                     input = document.createElement("select");
-                    const allowedStreams = ["Disney", "Netflix", "Amazon", "Festplatte"];
+                    const allowedStreams = ["Disney", "Netflix", "Amazon", "Spotify","Festplatte"];
                     allowedStreams.forEach((s) => {
                         const option = document.createElement("option");
                         option.value = s;
