@@ -5,13 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>database for media consumption</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="style/index.css">
 </head>
 
 <body>
 <div>
-    <h1>database for media consumption</h1>
+    <h1 id ="firstHeader">database for media consumption</h1>
 </div>
+
+<footer style="margin-top: 40px; text-align: center; font-size: 0.9em;">
+    <p><a href="marvel.html">Marvel Cinemativ Universum</a></p>
+</footer>
 
 <div class="toolbar">
     <div class="filters">
@@ -84,15 +88,13 @@
 <div id="table">
 </div>
 
-<footer style="margin-top: 40px; text-align: center; font-size: 0.9em;">
-    <p><a href="../../frontend/src/marvelSide/marvel.html">Marvel Cinemativ Universum</a></p>
-</footer>
+
 
 <!-- JavaScript-Datei einbinden -->
-<script type="module" src="createHeader.js"></script>
-<script type="module" src="createPopup.js"></script>
-<script type="module" src="openPopUp.js"></script>
-<script type="module" src="getDatasFromPopup.js"></script>
+<script type="module" src="table/createHeader.js"></script>
+<script type="module" src="popup/createPopup.js"></script>
+<script type="module" src="popup/openPopUp.js"></script>
+<script type="module" src="popup/getDatasFromPopup.js"></script>
 <script type="module" src="index.js"></script>
 </body>
 </html>

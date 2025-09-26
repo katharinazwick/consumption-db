@@ -1,4 +1,4 @@
-import { loadData } from "./outputTable.js";
+import { loadData } from "./table/outputTable.js";
 
 const incomplete = document.getElementById("incomplete");
 const chooseTyp = document.getElementById("chooseTyp");

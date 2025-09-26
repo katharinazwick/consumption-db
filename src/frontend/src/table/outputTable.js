@@ -1,51 +1,79 @@
-/*
+export async function loadData(chooseStream, incomplete, chooseTyp, chooseSort) {
+//durchgucken und evt sachen köschen
+
+    const paramsObj = {
+        streamFilter: chooseStream,
+        incompleteFilter: incomplete,
+        typFilter: chooseTyp,
+        sort: chooseSort
+    };
+    const searchParams = new URLSearchParams(paramsObj);
+
     const response = await fetch(`http://localhost:3000/get-entries?${searchParams.toString()}`);
     const data = await response.json();
-
+console.log(data);
     const divTable = document.getElementById("table");
     divTable.innerHTML = "";
-*/
 
-export function loadData(count) {
-    const data = [
-        { position: 2, title: "Iron Man 2", universum: "MCU", year: 2002 },
-        { position: 1, title: "Iron Man", universum: "MCU", year: 2001 },
-        { position: 2, title: "Iron Man 2", universum: "MCU", year: 2002 },
-        { position: 1, title: "Iron Man", universum: "SP", year: 2001 },
-        { position: 2, title: "Iron Man 2", universum: "SP", year: 2002 },
-        { position: 1, title: "Iron Man", universum: "SP", year: 2001 },
-        { position: 2, title: "Iron Man 2", universum: "SP", year: 2002 },
-        { position: 1, title: "Iron Man", universum: "MCU", year: 2001 },
-        { position: 2, title: "Iron Man 2", universum: "MCU", year: 2002 }
-    ];
+    const types = ["movie", "serie", "audiobook", "tale"];
+    const prefixCount = "rowCount";
+    const prefixDiv = "div"
+    const dynamic = {};
 
-    const container = document.getElementById("table");
+    types.forEach((type) => {
+        dynamic[prefixCount + type] = 1;
+        dynamic[prefixDiv + type] = document.createElement("div");
+    })
 
     data.forEach((item) => {
         const divRow = document.createElement("div");
         divRow.style.display = "flex";
-        divRow.style.width = "100%";
 
-        const arr = [item.position, item.title, item.universum, item.year];
-        const widths = ["10%", "40%", "20%", "20%"];
+        const widths = ["50%", "10%", "10%", "20%", "10%"];
 
+        const arr = [item.title, item.viewingyear, item.stream, item.description];
         arr.forEach((value, index) => {
             const divColumn = document.createElement("div");
-            divColumn.className = "childTable";
+            divColumn.className = "childTable"
             divColumn.innerText = value;
-            divColumn.style.padding = "4px";
-            divColumn.style.width = widths[index];
+            divColumn.style.padding = "2px";
+
+            if (index === 3 && item.description) { // 3 = Index der description-Spalte
+                const textContainer = document.createElement("div");
+                textContainer.className = "expandable";
+                textContainer.innerText = value;
+
+                const toggleButton = document.createElement("div");
+                toggleButton.className = "toggle-button";
+                toggleButton.innerText = "more";
+                toggleButton.style.cursor = "pointer";
+
+                let expanded = false;
+                toggleButton.addEventListener("click", () => {
+                    expanded = !expanded;
+                    textContainer.classList.toggle("expanded", expanded);
+                    toggleButton.innerText = expanded ? "less" : "more";
+                });
+                divColumn.innerHTML = ""; // Sicherstellen, dass nichts überschrieben wird
+                divColumn.appendChild(textContainer);
+                divColumn.appendChild(toggleButton);
+            }
+
+            //divColumn.style.width = index === 0 ? "50%" : "20%";
+            divColumn.style.width= widths[index];
+
 
             Object.assign(divColumn.style, {
                 border: "1px solid grey",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                color: "black"
+                flexWrap: "nowrap",
+                color: "black",
             });
 
             divRow.appendChild(divColumn);
-        });
+        })
 
         // --- Neue Spalte für Edit/Delete Icons ---
         const divActions = document.createElement("div");
@@ -117,7 +145,7 @@ export function loadData(count) {
                 if (index === 2) { // 2 = Index für 'stream'
                     // Dropdown für Stream
                     input = document.createElement("select");
-                    const allowedStreams = ["Disney", "Netflix", "Amazon","Spotify", "Festplatte"];
+                    const allowedStreams = ["Disney", "Netflix", "Amazon", "Spotify","Festplatte"];
                     allowedStreams.forEach((s) => {
                         const option = document.createElement("option");
                         option.value = s;
@@ -193,7 +221,6 @@ export function loadData(count) {
         deleteIcon.addEventListener("click", () => {
             // Referenz auf die aktuelle Zeile
             const rowToDelete = divRow;
-            console.log(item.id)
             const confirmed = confirm("Willst du dieses Element wirklich löschen?");
             if (!confirmed) return; // Abbrechen bei "Nein"
 
@@ -228,7 +255,6 @@ export function loadData(count) {
         divActions.appendChild(updateIcon);
         divActions.appendChild(deleteIcon);
 
-
 // Einheitliches Styling wie die anderen Spalten
         Object.assign(divActions.style, {
             border: "1px solid grey",
@@ -238,10 +264,21 @@ export function loadData(count) {
 
         divRow.appendChild(divActions);
 
-        count ++;
-        if (count % 2 === 0) {
-            divRow.style.background = "lightcoral";
-        }
-        container.appendChild(divRow);
-    });
+
+        dynamic[prefixCount + item.typ]++;
+        if (dynamic[prefixCount + item.typ] % 2 === 0) divRow.style.background = "lightsteelblue";
+        if (!item.completed) divRow.style.background = "hotpink";
+        dynamic[prefixDiv + item.typ].appendChild(divRow);
+    })
+
+    types.forEach((item) => {
+        const headline = document.createElement("h2");
+        headline.innerText = item + " " + (dynamic[prefixCount + item] - 1);
+        divTable.appendChild(headline);
+        divTable.appendChild(dynamic[prefixDiv + item]);
+    })
 }
+
+// Daten laden, sobald die Seite geladen wurde
+//document.addEventListener("DOMContentLoaded", loadData);
+

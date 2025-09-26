@@ -1,7 +1,9 @@
-const add = document.getElementById("marvelButton");
+import {reloadTable} from "../index.js";
+
+const add = document.getElementById("toAdd");
+console.log("hsdjfhbj")
 if(add){
-    console.log("hsdfhjkb")
-    add.addEventListener("click", MS_openPopup);
+    add.addEventListener("click", openPopup);
 }
 
 const close = document.getElementById("close");
@@ -10,7 +12,7 @@ if(close){
     close.addEventListener("click", closePopup);
 }
 
-export function MS_openPopup() {
+export function openPopup() {
     document.getElementById("popupOverlay").style.display = "block";
     // Alle Inputs zurücksetzen
     if (window.popupInputs) {

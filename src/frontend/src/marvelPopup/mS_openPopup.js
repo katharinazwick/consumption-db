@@ -1,13 +1,12 @@
-import {reloadTable} from "./index.js";
+import {reloadTable} from "../mS_index.js";
 
-const add = document.getElementById("toAdd");
-if(add){
-    add.addEventListener("click", openPopup);
-}
+const add = document.getElementById("toAdd2");
+add.addEventListener("click", openPopup);
+
 
 const close = document.getElementById("close");
 
-if(close){
+if (close) {
     close.addEventListener("click", closePopup);
 }
 
@@ -31,6 +30,7 @@ export function openPopup() {
         }
     }, 50);
 }
+
 export function closePopup() {
     document.getElementById("popupOverlay").style.display = "none";
     reloadTable();

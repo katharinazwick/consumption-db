@@ -6,8 +6,8 @@ Object.assign(divContainer.style,
         flexDirection: "rows",
     })
 
-const temp = ["position", "title", "universum", "year", "options"];
-const widths = ["10%", "40%", "20%", "20%", "10%"];
+const temp = ["position", "title", "year", "options"];
+const widths = ["10%", "70%", "10%", "10%"];
 
 temp.forEach((element, index) => {
     const divHeaders = document.createElement("div");

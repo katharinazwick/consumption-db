@@ -9,32 +9,22 @@ Object.assign(title.style, {
     boxSizing: "border-box",
 })
 
-const position = document.createElement("input");
-position.id = "positionInput";
-position.placeholder = "year";
-Object.assign(position.style, {
-    border: "1px solid grey",
-    width: "25%",
-})
-
-const year = document.createElement("input");
-year.id = "yearInput";
-year.placeholder = "year";
-Object.assign(year.style, {
+const date = document.createElement("input");
+date.id = "dateInput";
+date.placeholder = "date";
+Object.assign(date.style, {
     border: "1px solid grey",
     width: "25%",
 })
 
 field.appendChild(title);
-field.appendChild(description);
-field.appendChild(year);
+field.appendChild(date);
 
 // Warten, bis DOM geladen ist, dann Inputs für Navigation vorbereiten
 document.addEventListener("DOMContentLoaded", () => {
     window.popupInputs = [
         document.getElementById("titleInput"),
-        document.getElementById("positionInput"),
-        document.getElementById("yearInput"),
+        document.getElementById("dateInput"),
         document.getElementById("universumInput"),
     ];
 });

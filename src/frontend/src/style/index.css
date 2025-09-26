@@ -3,13 +3,28 @@ body {
     height: 100%;
     margin: 0;
 
+    #firstHeader {
+        padding: 10px;
+    }
+
+    #container {
+        padding: 10px;
+    }
+
+    #table {
+        padding: 10px;
+    }
+
     .popup-overlay {
         display: none;
         position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         background: rgba(0, 0, 0, 0.5);
     }
+
     .popup {
         background: white;
         padding: 30px;
@@ -18,20 +33,44 @@ body {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         border-radius: 5px;
     }
+
     .popup input, textarea {
         display: block;
         margin-bottom: 10px;
+        width: 100%;
+        padding: 10px 10px;  /* innenabstand */
+        border: 1px solid #ccc;
+        border-radius: 8px;  /* runde Ecken */
     }
-    #label{
+
+    #label {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
     }
+
     #box {
         width: 15px;
         height: 15px;
         cursor: pointer;
     }
+
+
+    #universumInput {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        gap: 20px;
+    }
+
+    #universumInput input {
+        width: 100%;
+        padding: 10px 10px;  /* innenabstand */
+        border: 1px solid #ccc;
+        border-radius: 8px;  /* runde Ecken */
+    }
+
     .expandable {
         max-width: 180px;
         max-height: 20px; /* Höhe für abgeschnittenen Text */
@@ -44,8 +83,9 @@ body {
         max-height: none; /* Volle Höhe anzeigen */
         white-space: normal;
     }
+
     .toolbar {
-        position:sticky;
+        position: sticky;
         top: 0;
         left: 0;
         right: 0;
@@ -57,10 +97,41 @@ body {
         align-items: center;
 
     }
+
     .headerContainer {
         position: sticky;
         top: 40px;
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(2px);
+    }
+
+    /*marvel*/
+
+    #jpg {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: 100vh;
+        background: url("marvel.jpg") no-repeat center center;
+        background-size: cover;
+        padding: 10px;
+    }
+
+    #window {
+        display: flex;
+        flex-direction: row;
+        background: rgba(143, 143, 143, 0.4);
+
+    }
+
+    #tableTwo {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background: rgba(143, 143, 143, 0.4);
+    }
+
+    #marvelButton {
+        height: 40px
     }
 }

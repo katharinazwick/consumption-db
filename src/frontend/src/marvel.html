@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<!--update -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>database for media consumption</title>
+     <link rel="stylesheet" href="style/index.css">
+ </head>
+
+ <body>
+ <div id="firstHeader">
+     <h1>Marvel Cinemativ Universum</h1>
+ </div>
+
+ <div class="toolbar">
+     <div class="filters">
+         <select id="chooseUniversum">
+             <option value="">Universum</option>
+             <option>Defenders</option>
+             <option>Fantastic Four</option>
+             <option>MCU</option>
+             <option>Spider-Man</option>
+             <option>X-Man</option>
+             <option>Special</option>
+         </select>
+     </div>
+     <button id="toAdd2">to add</button>
+ </div>
+
+ <div id ="jpg" >
+     <div id = "window"> </div>
+     <p></p>
+     <div id = "tableTwo"> </div>
+ </div>
+
+ <!--popup-->
+ <div class="popup-overlay" id="popupOverlay">
+     <div class="popup">
+         <h3>create a new input</h3>
+         <div id="field"></div>
+         <div id="label">
+             <div id="universumInput">
+                 <input id ="MCU" placeholder="MCU">
+                 <input id ="Defenders" placeholder="Defenders">
+                 <input id ="X-Men" placeholder="X-Men">
+                 <input id ="Spider-Man" placeholder="S-Man">
+                 <input id ="Fantastic Four" placeholder="F. 4">
+                 <input id ="Special" placeholder="Special">
+             </div>
+         </div>
+         <p></p>
+         <button id="close">close</button>
+         <button id="saveInput">save</button>
+     </div>
+ </div>
+
+ <p></p>
+
+ <div id="container"></div>
+ <p></p>
+ <div id="table">
+ </div>
+
+ <!-- JavaScript-Datei einbinden -->
+ <script type="module" src="marvelTable/mS_createHeader.js"></script>
+<script type="module" src="mS_index.js"></script>
+ <script type="module" src="marvelPopup/mS_openPopup.js"></script>
+<script type="module" src="marvelPopup/mS_createPopup.js"></script>
+<script type="module" src="marvelPopup/mS_getDatasFromPopup.js"></script>
+</body>
+</html>

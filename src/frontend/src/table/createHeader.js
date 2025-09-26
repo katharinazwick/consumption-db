@@ -6,21 +6,16 @@ Object.assign(divContainer.style,
         flexDirection: "rows",
     })
 
-const temp = ["title", "viewing year", "stream", "description"];
+const temp = ["title", "viewing year", "stream", "description", "options"];
+const widths = ["50%", "10%", "10%", "20%", "10%"];
 
-temp.forEach((element) => {
+temp.forEach((element, index) => {
     const divHeaders = document.createElement("div");
     divHeaders.className = "childHeaders"
     divHeaders.innerText = element;
     divHeaders.style.height= "30px";
     divHeaders.style.padding= "2px";
-    if (element === "title") {
-        divHeaders.style.width = "50%";
-    } else if (element === "description") {
-        divHeaders.style.width = "20%";
-    } else {
-        divHeaders.style.width = "15%";
-    }
+        divHeaders.style.width = widths[index];
     Object.assign(divHeaders.style, {
         border: "1px solid grey",
         display: "flex",
