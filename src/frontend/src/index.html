@@ -48,6 +48,10 @@
             <option value="false">not favourite</option>
         </select>
 
+        <select id="actor">
+            <option>actor</option>
+        </select>
+
         <select id="sort">
             <option>title ascending</option>
             <option>title descending</option>
@@ -94,7 +98,11 @@
 <div class="popup-overlay" id="actorOverlay">
     <div class="popup">
         <h3>create a new actor</h3>
-        <input id="actorNameInput" placeholder="name *">
+        <div class="suggestWrap">
+            <input id="actorNameInput" placeholder="name *" autocomplete="off">
+            <div id="actorSuggestions" class="suggestions"></div>
+        </div>
+        <small id="actorHint"></small>
         <div id="actorMovies"></div>
         <button id="addMovieSelect" type="button">+ movie</button>
         <p></p>
@@ -102,6 +110,7 @@
         <button id="saveActor">save</button>
     </div>
 </div>
+
 
 <p></p>
 
@@ -116,9 +125,10 @@
 <script type="module" src="table/createHeader.js"></script>
 <script type="module" src="popup/createPopup.js"></script>
 <script type="module" src="popup/openPopUp.js"></script>
-<script type="module" src="popup/getDatasFromPopup.js"></script>
-<script type="module" src="popup/actorPopup.js"></script>
+<script type="module" src="popup/getDatasFromActorPopup.js"></script>
+<script type="module" src="popup/actorPopUp.js"></script>
 <script type="module" src="index.js"></script>
+<script type="module" src="table/actorFilter.js"></script>
 </body>
 </html>
 

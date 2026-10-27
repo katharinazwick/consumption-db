@@ -3,8 +3,7 @@ import cors from "cors";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import movieRoutes from "./src/routes/movie.js";
-import marvelRoutes from "./src/routes/marvel.js";
+import routes from "./src/routes/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,8 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routen einbinden
-app.use( movieRoutes);
-app.use( marvelRoutes);
+app.use(routes);
 
 // Statische Dateien
 console.log(path.join(__dirname, "/frontend/src"))

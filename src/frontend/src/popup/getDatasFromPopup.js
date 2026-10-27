@@ -1,6 +1,7 @@
 import {closePopup} from "./openPopUp.js";
 
 document.getElementById("saveInput").addEventListener("click", async () => {
+    console.log("dnfksdnf")
     const title = document.getElementById("titleInput").value.trim();
     let viewingYear = document.getElementById("viewingYearInput").value;
     if (viewingYear === "") {

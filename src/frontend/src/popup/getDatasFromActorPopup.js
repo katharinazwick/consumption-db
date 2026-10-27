@@ -1,4 +1,5 @@
-import {closeActorPopup} from "./actorPopUp.js";
+import {closeActorPopup, getSelectedActor} from "./actorPopUp.js";
+import {loadActorFilter} from "../table/actorFilter.js";
 
 document.getElementById("saveActor").addEventListener("click", async () => {
     const name = document.getElementById("actorNameInput").value.trim();
@@ -7,20 +8,23 @@ document.getElementById("saveActor").addEventListener("click", async () => {
         return;
     }
 
-    // gewählte Film-IDs einsammeln, leere und doppelte raus
     const movieIds = [...new Set(
         [...document.querySelectorAll("#actorMovies .movieSelect")]
             .map((s) => s.value)
             .filter((v) => v !== "")
     )];
 
+    const actor = getSelectedActor();
+    const payload = {actorId: actor ? actor.id : null, name, movieIds};
+
     try {
         const res = await fetch("http://localhost:3000/add-actor", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({name, movieIds}),
+            body: JSON.stringify(payload),
         });
         if (!res.ok) {
+            await loadActorFilter();
             const err = await res.json().catch(() => ({}));
             alert("Fehler beim Speichern: " + (err.error || res.statusText));
             return;
@@ -32,7 +36,6 @@ document.getElementById("saveActor").addEventListener("click", async () => {
     }
 });
 
-// Enter speichert, solange das Actor-Popup offen ist
 document.addEventListener("keydown", (e) => {
     const overlay = document.getElementById("actorOverlay");
     if (overlay.style.display === "block" && e.key === "Enter") {
