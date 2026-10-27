@@ -1,10 +1,10 @@
 import {reloadTable} from "../index.js";
 
 const add = document.getElementById("toAdd");
-console.log("hsdjfhbj")
 if(add){
     add.addEventListener("click", openPopup);
 }
+
 
 const close = document.getElementById("close");
 
@@ -14,6 +14,17 @@ if(close){
 
 export function openPopup() {
     document.getElementById("popupOverlay").style.display = "block";
+
+    // Hardcore-Reset für die Review-Checkbox beim Öffnen
+    const box = document.getElementById("box");
+    const secondBox = document.getElementById("secondBox");
+    if (box) {
+        box.checked = false;
+    }
+    if(secondBox){
+        secondBox.checked = false;
+    }
+
     // Alle Inputs zurücksetzen
     if (window.popupInputs) {
         window.popupInputs.forEach(input => {

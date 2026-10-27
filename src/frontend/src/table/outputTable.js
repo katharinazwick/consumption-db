@@ -1,17 +1,18 @@
-export async function loadData(chooseStream, incomplete, chooseTyp, chooseSort) {
+export async function loadData(chooseStream, incomplete, favourite, chooseTyp, chooseSort) {
 //durchgucken und evt sachen köschen
 
     const paramsObj = {
         streamFilter: chooseStream,
         incompleteFilter: incomplete,
+        favouriteFilter: favourite,
         typFilter: chooseTyp,
         sort: chooseSort
     };
+    console.log(paramsObj);
     const searchParams = new URLSearchParams(paramsObj);
 
     const response = await fetch(`http://localhost:3000/get-entries?${searchParams.toString()}`);
     const data = await response.json();
-console.log(data);
     const divTable = document.getElementById("table");
     divTable.innerHTML = "";
 
@@ -60,7 +61,7 @@ console.log(data);
             }
 
             //divColumn.style.width = index === 0 ? "50%" : "20%";
-            divColumn.style.width= widths[index];
+            divColumn.style.width = widths[index];
 
 
             Object.assign(divColumn.style, {
@@ -95,8 +96,8 @@ console.log(data);
 
             fetch(`http://localhost:3000/edit-entry/${item.id}`, {
                 method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ completed: !item.completed }), // nur Status toggeln
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({completed: !item.completed}), // nur Status toggeln
             })
                 .then(async (response) => {
                     let data;
@@ -112,7 +113,7 @@ console.log(data);
                     }
 
                     alert(data.message || "Status erfolgreich geändert!");
-                    loadData(chooseStream, incomplete, chooseTyp, chooseSort);
+                    loadData(chooseStream, incomplete, favourite, chooseTyp, chooseSort);
                 })
                 .catch((err) => {
                     alert("Fehler beim Status ändern: " + err.message);
@@ -145,7 +146,7 @@ console.log(data);
                 if (index === 2) { // 2 = Index für 'stream'
                     // Dropdown für Stream
                     input = document.createElement("select");
-                    const allowedStreams = ["Disney", "Netflix", "Amazon", "Spotify","Festplatte"];
+                    const allowedStreams = ["Disney", "Netflix", "Amazon", "Spotify", "Sonstiges"];
                     allowedStreams.forEach((s) => {
                         const option = document.createElement("option");
                         option.value = s;
@@ -185,7 +186,7 @@ console.log(data);
 
                         fetch(`http://localhost:3000/update-entry/${item.id}`, {
                             method: "PUT",
-                            headers: { "Content-Type": "application/json" },
+                            headers: {"Content-Type": "application/json"},
                             body: JSON.stringify(newData),
                         })
                             .then(async (response) => {
@@ -202,7 +203,7 @@ console.log(data);
                                 }
 
                                 alert(data.message || "Eintrag erfolgreich aktualisiert!");
-                                loadData(chooseStream, incomplete, chooseTyp, chooseSort);
+                                loadData(chooseStream, incomplete, favourite, chooseTyp, chooseSort);
                             })
                             .catch((err) => {
                                 alert("Fehler beim Aktualisieren: " + err.message);
@@ -250,10 +251,61 @@ console.log(data);
 
         });
 
+// favourite
+        const favouriteIcon = document.createElement("span");
+        favouriteIcon.innerText = "🩶️";
+        const isFavourite = item.favourite;
+        if(isFavourite) favouriteIcon.innerText = "❤️";
+        favouriteIcon.style.cursor = "pointer";
+        favouriteIcon.addEventListener("click", () => {
+            // Prüfen, ob das Item bereits favorisiert ist (setze voraus, dass item.favourite ein boolean ist)
+            // Dynamischer Text je nach aktuellem Status
+            const message = isFavourite
+                ? "Dieses Objekt ist schon als Favourite markiert. Willst du es demarkieren?"
+                : "Willst du dieses Element als Favoriten markieren?";
+
+            const confirmed = confirm(message);
+            if (!confirmed) return; // Abbrechen
+
+            // FAVOURITE Request asynchron (PUT-Methode anpassen)
+            fetch(`http://localhost:3000/editFavourite-entry/${item.id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(async (response) => {
+                    let data;
+                    try {
+                        data = await response.json();
+                    } catch {
+                        data = {};
+                    }
+
+                    if (!response.ok) {
+                        alert(data.error || "Fehler beim Aktualisieren des Favoriten-Status.");
+                        return;
+                    }
+
+                    alert(data.message || "Erfolgreich aktualisiert!");
+                    loadData(chooseStream, incomplete, favourite, chooseTyp, chooseSort);
+
+                    // Status im Frontend direkt umschalten (optional, für Live-Updates)
+                    item.favourite = !item.favourite;
+
+                    // Falls du z.B. das Icon optisch anpassen möchtest (Klasse hinzufügen/entfernen):
+                    favouriteIcon.classList.toggle("active", item.favourite);
+                })
+                .catch((err) => {
+                    alert("Fehler beim Markieren: " + err.message);
+                });
+        });
+
 
         divActions.appendChild(editIcon);
         divActions.appendChild(updateIcon);
         divActions.appendChild(deleteIcon);
+        divActions.appendChild(favouriteIcon);
 
 // Einheitliches Styling wie die anderen Spalten
         Object.assign(divActions.style, {

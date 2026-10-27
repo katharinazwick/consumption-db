@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("viewingYearInput"),
         document.getElementById("typInput"),
         document.getElementById("streamInput"),
-        document.getElementById("box")
+        document.getElementById("box"),
+        document.getElementById("secondBox"),
     ];
 });

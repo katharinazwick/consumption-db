@@ -17,6 +17,13 @@ document.getElementById("saveInput").addEventListener("click", async () => {
         completed = false;
     }
 
+    let favourite = false;
+    const secondBox = document.getElementById("secondBox");
+
+    if (secondBox.checked) {
+        completed = true;
+    }
+
     if (!title) {
         alert("Title darf nicht leer sein!");
         return;
@@ -40,7 +47,7 @@ document.getElementById("saveInput").addEventListener("click", async () => {
         }
 
         // 2) Jetzt wirklich speichern (es darf dupliziert werden)
-        const payload = { title, viewingYear, stream, typ, description, completed };
+        const payload = { title, viewingYear, stream, typ, description, completed, favourite };
 
         const response = await fetch("http://localhost:3000/add-entry", {
             method: "POST",

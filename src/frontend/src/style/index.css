@@ -3,6 +3,7 @@ body {
     height: 100%;
     margin: 0;
 
+
     #firstHeader {
         padding: 10px;
     }
@@ -23,6 +24,7 @@ body {
         width: 100%;
         height: 100%;
         background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
     }
 
     .popup {
@@ -49,7 +51,7 @@ body {
         justify-content: space-between;
     }
 
-    #box {
+    #box, #secondBox {
         width: 15px;
         height: 15px;
         cursor: pointer;
@@ -103,6 +105,24 @@ body {
         top: 40px;
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(2px);
+        z-index: 1  ;
+    }
+
+    #actorOverlay .popup input {
+        margin-bottom: 10px;
+    }
+
+    .movieRow {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .movieRow select {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
     }
 
     /*marvel*/
@@ -111,9 +131,9 @@ body {
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
-        height: 100vh;
         background: url("marvel.jpg") no-repeat center center;
         background-size: cover;
+        background-attachment: fixed;
         padding: 10px;
     }
 
@@ -121,7 +141,6 @@ body {
         display: flex;
         flex-direction: row;
         background: rgba(143, 143, 143, 0.4);
-
     }
 
     #tableTwo {

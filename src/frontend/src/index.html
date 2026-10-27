@@ -25,7 +25,7 @@
             <option>Netflix</option>
             <option>Amazon</option>
             <option>Spotify</option>
-            <option>Festplatte</option>
+            <option>Sonstiges</option>
         </select>
 
         <select id="chooseTyp">
@@ -37,9 +37,15 @@
         </select>
 
         <select id="incomplete">
-            <option value="">all</option>
+            <option value="">status</option>
             <option value="false">incomplete</option>
             <option value="true">complete</option>
+        </select>
+
+        <select id="favourite">
+            <option value="">relationship</option>
+            <option value="true">favourite</option>
+            <option value="false">not favourite</option>
         </select>
 
         <select id="sort">
@@ -49,7 +55,8 @@
             <option>viewingyear descending</option>
         </select>
     </div>
-        <button id="toAdd">to add</button>
+        <button id="toAdd">add movie</button>
+        <button id="toAddActor">add actor</button>
 </div>
 
 <!--popup-->
@@ -70,14 +77,29 @@
                 <option>Netflix</option>
                 <option>Amazon</option>
                 <option>Spotify</option>
-                <option>Festplatte</option>
+                <option>Sonstiges</option>
             </select>
             <label for="box">incomplete or need for review:</label>
             <input type="checkbox" id="box" class="box"></input>
+            <label for="secondBox">favourite:</label>
+            <input type="checkbox" id="secondBox" class="box"></input>
         </div>
         <p></p>
         <button id="close">close</button>
         <button id="saveInput">save</button>
+    </div>
+</div>
+
+<!--popup actor-->
+<div class="popup-overlay" id="actorOverlay">
+    <div class="popup">
+        <h3>create a new actor</h3>
+        <input id="actorNameInput" placeholder="name *">
+        <div id="actorMovies"></div>
+        <button id="addMovieSelect" type="button">+ movie</button>
+        <p></p>
+        <button id="closeActor">close</button>
+        <button id="saveActor">save</button>
     </div>
 </div>
 
@@ -95,6 +117,7 @@
 <script type="module" src="popup/createPopup.js"></script>
 <script type="module" src="popup/openPopUp.js"></script>
 <script type="module" src="popup/getDatasFromPopup.js"></script>
+<script type="module" src="popup/actorPopup.js"></script>
 <script type="module" src="index.js"></script>
 </body>
 </html>

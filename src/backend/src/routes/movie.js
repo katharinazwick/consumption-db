@@ -1,50 +1,55 @@
 import express from "express";
-import { pool } from "../pool.js";
+import {pool} from "../pool.js";
 
 const router = express.Router();
 // Prüft, ob ein Titel existiert
 router.get("/title-exists", async (req, res) => {
-    const { title } = req.query;
-    if (!title || !title.trim()) return res.status(400).json({ error: "title query fehlt" });
+    const {title} = req.query;
+    if (!title || !title.trim()) return res.status(400).json({error: "title query fehlt"});
 
     try {
-        const { rows } = await pool.query(
+        const {rows} = await pool.query(
             "SELECT typ FROM movie WHERE LOWER(TRIM(title)) = LOWER(TRIM($1))",
             [title]
         );
-        res.json({ exists: rows.length > 0, count: rows.length, types: rows.map(r => r.typ) });
+        res.json({exists: rows.length > 0, count: rows.length, types: rows.map(r => r.typ)});
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler bei Titelprüfung" });
+        res.status(500).json({error: "Fehler bei Titelprüfung"});
     }
 });
 
 // Daten hinzufügen
 router.post("/add-entry", async (req, res) => {
-    const { title, viewingYear, stream, typ, description, completed } = req.body;
-    if (!title) return res.status(400).json({ error: "Title darf nicht leer sein!" });
+    const {title, viewingYear, stream, typ, description, completed, favourite} = req.body;
+    if (!title) return res.status(400).json({error: "Title darf nicht leer sein!"});
 
     try {
         const result = await pool.query(
-            "INSERT INTO movie (title, viewingYear, stream, typ, description, completed) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *",
-            [title, viewingYear, stream, typ, description, completed]
+            "INSERT INTO movie (title, viewingYear, stream, typ, description, completed, favourite) VALUES ($1,$2,$3,$4,$5,$6,$7 ) RETURNING *",
+            [title, viewingYear, stream, typ, description, completed, favourite]
         );
         res.json(result.rows[0]);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Speichern!" });
+        res.status(500).json({error: "Fehler beim Speichern!"});
     }
 });
 
 // Daten abrufen mit Filter
 router.get("/get-entries", async (req, res) => {
-    const { incompleteFilter, typFilter, streamFilter, sort } = req.query;
+    const {incompleteFilter, favouriteFilter, typFilter, streamFilter, sort} = req.query;
     const filterArray = [];
     const filterValueArray = [];
 
     try {
         let sqlStatement = "SELECT * FROM movie";
-        const arrayDynamic = { completed: incompleteFilter, typ: typFilter, stream: streamFilter };
+        const arrayDynamic = {
+            completed: incompleteFilter,
+            favourite: favouriteFilter,
+            typ: typFilter,
+            stream: streamFilter
+        };
 
         for (let key in arrayDynamic) {
             if (arrayDynamic[key]) {
@@ -63,45 +68,45 @@ router.get("/get-entries", async (req, res) => {
         res.json(result.rows);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Abrufen der Daten!" });
+        res.status(500).json({error: "Fehler beim Abrufen der Daten!"});
     }
 });
 
 // Delete, Edit, Update Entry
 router.delete("/delete-entry/:id", async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     try {
         const result = await pool.query("DELETE FROM movie WHERE id = $1", [id]);
-        if (result.rowCount === 0) return res.status(404).json({ error: "Eintrag nicht gefunden" });
-        res.json({ message: "Eintrag erfolgreich gelöscht" });
+        if (result.rowCount === 0) return res.status(404).json({error: "Eintrag nicht gefunden"});
+        res.json({message: "Eintrag erfolgreich gelöscht"});
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Löschen" });
+        res.status(500).json({error: "Fehler beim Löschen"});
     }
 });
 
 router.put("/edit-entry/:id", async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     try {
         const result = await pool.query(
             "UPDATE movie SET completed = NOT completed WHERE id = $1 RETURNING *",
             [id]
         );
-        if (result.rowCount === 0) return res.status(404).json({ error: "Eintrag nicht gefunden" });
-        res.json({ message: "Completed erfolgreich geändert", updated: result.rows[0] });
+        if (result.rowCount === 0) return res.status(404).json({error: "Eintrag nicht gefunden"});
+        res.json({message: "Completed erfolgreich geändert", updated: result.rows[0]});
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Aktualisieren" });
+        res.status(500).json({error: "Fehler beim Aktualisieren"});
     }
 });
 
 router.put("/update-entry/:id", async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
     const updates = req.body;
 
-    if (!updates || Object.keys(updates).length === 0) return res.status(400).json({ error: "Keine Daten zum Aktualisieren" });
+    if (!updates || Object.keys(updates).length === 0) return res.status(400).json({error: "Keine Daten zum Aktualisieren"});
 
-    const allowedColumns = { title: "title", viewingyear: "viewingyear", stream: "stream", description: "description" };
+    const allowedColumns = {title: "title", viewingyear: "viewingyear", stream: "stream", description: "description"};
     const setClauses = [];
     const values = [];
 
@@ -112,16 +117,44 @@ router.put("/update-entry/:id", async (req, res) => {
         }
     });
 
-    if (setClauses.length === 0) return res.status(400).json({ error: "Keine gültigen Spalten zum Aktualisieren" });
+    if (setClauses.length === 0) return res.status(400).json({error: "Keine gültigen Spalten zum Aktualisieren"});
     values.push(id);
 
     try {
-        const result = await pool.query(`UPDATE movie SET ${setClauses.join(", ")} WHERE id = $${values.length} RETURNING *`, values);
-        if (result.rowCount === 0) return res.status(404).json({ error: "Eintrag nicht gefunden" });
-        res.json({ message: "Eintrag erfolgreich aktualisiert!", updated: result.rows[0] });
+        const result = await pool.query(`UPDATE movie
+                                         SET ${setClauses.join(", ")}
+                                         WHERE id = $${values.length} RETURNING *`, values);
+        if (result.rowCount === 0) return res.status(404).json({error: "Eintrag nicht gefunden"});
+        res.json({message: "Eintrag erfolgreich aktualisiert!", updated: result.rows[0]});
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: "Fehler beim Bearbeiten des Eintrags" });
+        res.status(500).json({error: "Fehler beim Bearbeiten des Eintrags"});
+    }
+});
+
+// Favoriten-Status umschalten (Toggle: True wird zu False und umgekehrt)
+router.put("/editFavourite-entry/:id", async (req, res) => {
+    const {id} = req.params;
+    try {
+        const result = await pool.query(
+            "UPDATE movie SET favourite = NOT favourite WHERE id = $1 RETURNING *",
+            [id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({error: "Eintrag nicht gefunden"});
+        }
+
+        const updatedMovie = result.rows[0];
+        const statusText = updatedMovie.favourite ? "als Favorit markiert" : "aus den Favoriten entfernt";
+
+        res.json({
+            message: `Eintrag erfolgreich ${statusText}!`,
+            updated: updatedMovie
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({error: "Fehler beim Ändern des Favoriten-Status"});
     }
 });
 
