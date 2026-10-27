@@ -3,7 +3,6 @@ import {pool} from "../../pool.js";
 
 const router = express.Router();
 
-// Delete, Edit, Update Entry
 router.delete("/delete-entry/:id", async (req, res) => {
     const {id} = req.params;
     try {

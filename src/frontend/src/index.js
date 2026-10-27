@@ -8,14 +8,12 @@ const chooseStream = document.getElementById("chooseStream");
 const chooseSort = document.getElementById("sort");
 
 export function reloadTable() {
-    loadData(chooseStream.value, incomplete.value, favourite.value, chooseTyp.value, chooseSort.value);
-//actor.value,
+    loadData(chooseStream.value, incomplete.value, favourite.value, actor.value,chooseTyp.value, chooseSort.value);
 }
 
 //setzt bei neuladen alle filter auf initial
 window.onload = function () {
-    loadData(chooseStream.selectedIndex="", incomplete.selectedIndex="", favourite.selectedIndex="", chooseTyp.selectedIndex="", chooseSort.value);
-    //actor.selectedIndex="",
+    loadData(chooseStream.selectedIndex="", incomplete.selectedIndex="", favourite.selectedIndex="", actor.selectedIndex="",chooseTyp.selectedIndex="", chooseSort.value);
 }
 // Initiales Laden
 reloadTable();

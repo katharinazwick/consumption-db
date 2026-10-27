@@ -7,13 +7,13 @@ router.delete("/delete-marvelEntry/:id", async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Schritt 1: Alle Universum-Zeilen löschen
+        // 1. Alle Universum-Zeilen löschen
         await pool.query(
             `DELETE FROM marvel_universum WHERE marvel_titleid = $1`,
             [id]
         );
 
-        // Schritt 2: Den Titel löschen
+        // 2. Den Titel löschen
         await pool.query(
             `DELETE FROM marvel_title WHERE id = $1`,
             [id]

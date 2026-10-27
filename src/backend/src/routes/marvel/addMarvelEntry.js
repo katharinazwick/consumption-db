@@ -11,7 +11,6 @@ router.post("/add-marvelEntry", async (req, res) => {
     }
 
     try {
-        // Schritt 1: Titel speichern
         const result = await pool.query(
             `INSERT INTO marvel_title (title, date) VALUES ($1, $2) RETURNING id`,
             [title, date || null]

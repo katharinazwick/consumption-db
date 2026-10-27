@@ -7,7 +7,6 @@ router.get("/get-actors", async (req, res) => {
     const q = (req.query.q || "").trim();
 
     try {
-        // kein Suchbegriff -> alle Schauspieler (für das Filter-Select)
         if (!q) {
             const {rows} = await pool.query("SELECT id, name FROM actor ORDER BY name");
             return res.json(rows);

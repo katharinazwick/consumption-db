@@ -1,10 +1,11 @@
-export async function loadData(chooseStream, incomplete, favourite, chooseTyp, chooseSort) {
+export async function loadData(chooseStream, incomplete, favourite, actor, chooseTyp, chooseSort) {
 //durchgucken und evt sachen köschen
 
     const paramsObj = {
         streamFilter: chooseStream,
         incompleteFilter: incomplete,
         favouriteFilter: favourite,
+        actorFilter: actor,
         typFilter: chooseTyp,
         sort: chooseSort
     };
@@ -244,6 +245,7 @@ export async function loadData(chooseStream, incomplete, favourite, chooseTyp, c
 
                     alert(data.message || "Eintrag erfolgreich gelöscht!");
                     rowToDelete.remove();
+                    loadData(chooseStream, incomplete, favourite, chooseTyp, chooseSort);
                 })
                 .catch((err) => {
                     alert("Fehler beim Löschen: " + err.message);

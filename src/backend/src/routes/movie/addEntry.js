@@ -3,7 +3,6 @@ import {pool} from "../../pool.js";
 
 const router = express.Router();
 
-// Daten hinzufügen
 router.post("/add-entry", async (req, res) => {
     const {title, viewingYear, stream, typ, description, completed, favourite} = req.body;
     if (!title) return res.status(400).json({error: "Title darf nicht leer sein!"});

@@ -3,7 +3,6 @@ import {pool} from "../../pool.js";
 
 const router = express.Router();
 
-// Favoriten-Status umschalten (Toggle: True wird zu False und umgekehrt)
 router.put("/editFavourite-entry/:id", async (req, res) => {
     const {id} = req.params;
     try {

@@ -3,7 +3,6 @@ import {pool} from "../../pool.js";
 
 const router = express.Router();
 
-// Schauspieler anlegen ODER bei vorhandenem nur Filme ergänzen
 router.post("/add-actor", async (req, res) => {
     const {actorId, name, movieIds} = req.body;
     const cleanName = (name || "").trim();
