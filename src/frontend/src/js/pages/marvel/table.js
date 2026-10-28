@@ -34,7 +34,7 @@ function createRow(item, onChange) {
             {cell: cells[2], field: "date", value: item.date},
         ], {
             cancel: onChange,
-            save: (changes) => perform(() => api.updateMarvelEntry(item.id, changes), "Eintrag aktualisiert", onChange),
+            save: (changes) => perform(() => api.updateMarvelEntry(item.id, {...changes, universum: item.universum}), "Eintrag aktualisiert", onChange),
         })),
         iconButton("🗑️", "Löschen", async () => {
             if (!await confirmAction("Willst du dieses Element wirklich löschen?")) return;
