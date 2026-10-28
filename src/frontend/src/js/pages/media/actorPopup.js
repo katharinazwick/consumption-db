@@ -19,9 +19,35 @@ export function initActorPopup({onSaved}) {
     const hideSuggestions = setupActorSuggestions({
         input: nameInput,
         list: $("#actorSuggestions"),
-        onPick: (actor) => { selectedActor = actor; hint.textContent = "Neue Filme werden bei diesem Schauspieler ergänzt."; },
-        onType: () => { selectedActor = null; hint.textContent = ""; },
+        onPick: (actor) => {
+            selectedActor = actor;
+            hint.textContent = "Neue Filme werden bei diesem Schauspieler ergänzt.";
+            loadMovieOptions(actor.id);
+        },
+        onType: () => {
+            hint.textContent = "";
+            if (!selectedActor) return;
+            selectedActor = null;
+            loadMovieOptions(); // wieder alle Filme
+        },
     });
+
+    let loadId = 0;
+
+    // Lädt die wählbaren Filme (für einen bestehenden Schauspieler ohne seine bisherigen) und
+    // aktualisiert die schon offenen Selects. Nicht mehr verfügbare Auswahlen werden dabei geleert.
+    async function loadMovieOptions(actorId) {
+        const mine = ++loadId;
+        try {
+            const movies = await api.getAvailableMovies(actorId);
+            if (mine !== loadId) return; // veraltete Antwort
+            movieOptions = movies.map((m) => ({value: String(m.id), label: `${m.title} (${m.typ})`}));
+        } catch (err) {
+            movieOptions = [];
+            toastError(err);
+        }
+        [...rowsBox.children].forEach((r) => r.select.setOptions(movieOptions));
+    }
 
     function addMovieRow() {
         const select = createSearchSelect({
@@ -47,13 +73,7 @@ export function initActorPopup({onSaved}) {
         hint.textContent = "";
         hideSuggestions();
         rowsBox.replaceChildren();
-        try {
-            const movies = await api.getEntries({sort: "title ascending"});
-            movieOptions = movies.map((m) => ({value: String(m.id), label: `${m.title} (${m.typ})`}));
-        } catch (err) {
-            movieOptions = [];
-            toastError(err);
-        }
+        await loadMovieOptions();
         addMovieRow();
     }
 

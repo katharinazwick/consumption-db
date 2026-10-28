@@ -1,0 +1,20 @@
+/* Actors-Seite: pro Schauspieler ein Abschnitt, Filme als Zeilen */
+body.actors { --cols: minmax(0, 1fr) 7.5rem 4rem; }
+
+.actors .section > h2 { cursor: default; }
+.actors .section > h2 .actor-name { flex: 0 1 auto; }
+.actors .section > h2 input {
+    height: 36px;
+    padding: 0 10px;
+    font: inherit;
+    font-weight: 700;
+    min-width: 12rem;
+}
+.actors .section > h2 .icon-btn { font-size: 15px; }
+
+.actors .cell.col-0 { text-align: left; font-weight: 600; }
+.actors .cell.col-1 { text-align: center; }
+.actors .cell.col-2 { display: flex; justify-content: center; }
+.actors .rows .row:nth-child(odd) { background: var(--row-odd); }
+.actors .rows:empty::after { content: "No movies"; }
+.actors .empty { margin-top: 28px; text-align: center; color: var(--muted); }

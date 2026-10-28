@@ -11,7 +11,6 @@ const DEFINITIONS = [
     {key: "typ", param: "typFilter", label: "Type", options: asOptions(TYPES)},
     {key: "status", param: "incompleteFilter", label: "Status", options: STATUS_OPTIONS},
     {key: "favourite", param: "favouriteFilter", label: "Relationship", options: FAVOURITE_OPTIONS},
-    {key: "actor", param: "actorFilter", label: "Actor", options: [], search: true},
 ];
 
 /** Baut Filter-Popup, Chips und Sortierung. Ruft onChange, sobald sich ein Wert ändert. */
@@ -79,10 +78,5 @@ export function initFilters({onChange}) {
             ...Object.fromEntries(DEFINITIONS.map((d) => [d.param, controls[d.key].get()])),
             sort: sortSelect.value,
         }),
-        setActors(actors) {
-            controls.actor.options = actors.map((a) => ({value: String(a.id), label: a.name}));
-            controls.actor.setOptions(controls.actor.options);
-            renderChips(); // falls der gewählte Schauspieler nicht mehr existiert
-        },
     };
 }

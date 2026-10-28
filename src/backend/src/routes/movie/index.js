@@ -6,6 +6,7 @@ import deleteEntry from "./deleteEntry.js";
 import editEntry from "./editEntry.js";
 import updateEntry from "./updateEntry.js";
 import editFavouriteEntry from "./editFavouriteEntry.js";
+import getAvailableMovies from "./getAvailableMovies.js"
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use(deleteEntry);
 router.use(editEntry);
 router.use(updateEntry);
 router.use(editFavouriteEntry);
+router.use(getAvailableMovies);
 
 export default router;

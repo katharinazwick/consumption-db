@@ -31,6 +31,8 @@ export const deleteEntry = (id) => request(`/delete-entry/${id}`, {method: "DELE
 
 // ---- Actors ----
 export const getActors = (q) => request("/get-actors", {query: q ? {q} : undefined});
+export const getAvailableMovies = (actorId) =>
+    request("/get-available-movies", {query: actorId ? {actorId} : undefined});
 export const addActor = (payload) => request("/add-actor", {method: "POST", body: payload});
 
 // ---- Marvel ----
@@ -39,3 +41,8 @@ export const getMarvelEntries = (universum) =>
 export const addMarvelEntry = (entry) => request("/add-marvelEntry", {method: "POST", body: entry});
 export const updateMarvelEntry = (id, changes) => request(`/update-marvelEntry/${id}`, {method: "PUT", body: changes});
 export const deleteMarvelEntry = (id) => request(`/delete-marvelEntry/${id}`, {method: "DELETE"});
+
+// ---- Actor-Übersicht ----
+export const getActorMovies = () => request("/get-actor-movies");
+export const updateActor = (id, changes) => request(`/update-actor/${id}`, {method: "PUT", body: changes});
+export const removeActorMovie = (actorId, movieId) => request(`/remove-actor-movie/${actorId}/${movieId}`, {method: "DELETE"});

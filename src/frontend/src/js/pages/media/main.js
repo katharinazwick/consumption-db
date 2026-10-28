@@ -21,16 +21,7 @@ async function reload() {
     }
 }
 
-async function reloadActors() {
-    try {
-        filters.setActors(await api.getActors());
-    } catch (err) {
-        toastError(err);
-    }
-}
-
 renderHead($("#tableHead"));
 initAddPopup({onSaved: reload});
-initActorPopup({onSaved: () => { reloadActors(); reload(); }});
-reloadActors();
+initActorPopup({onSaved: () => {reload(); }});
 reload();
