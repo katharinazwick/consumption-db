@@ -1,0 +1,43 @@
+:root {
+    --ink: #1c2438;
+    --muted: #65708a;
+    --paper: #f1f4f9;
+    --surface: #ffffff;
+    --line: #d3dae8;
+    --accent: #28376e;
+    --accent-hover: #1d2a58;
+    --focus: #5b78d6;
+
+    /* Tabellenfarben bleiben bewusst die bekannten */
+    --row-odd: lightsteelblue;
+    --row-incomplete: hotpink;
+    --row-ink: black;
+
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow: 0 10px 30px rgba(28, 36, 56, .16);
+    --toolbar-h: 64px;
+    --font: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: light; }
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 15px/1.45 var(--font);
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; letter-spacing: -.02em; }
+
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+[hidden] { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+}

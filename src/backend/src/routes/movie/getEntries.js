@@ -1,5 +1,10 @@
+import express from "express";
+import {pool} from "../../pool.js";
+
+const router = express.Router();
+
 router.get("/get-entries", async (req, res) => {
-    const {incompleteFilter, favouriteFilter, typFilter, streamFilter, actorFilter, sort} = req.query;
+    const {incompleteFilter, favouriteFilter, typFilter, streamFilter, sort} = req.query;
     const filterArray = [];
     const filterValueArray = [];
 
@@ -18,15 +23,6 @@ router.get("/get-entries", async (req, res) => {
                 filterValueArray.push(arrayDynamic[key]);
             }
         }
-
-        // Schauspieler-Filter: nur Filme, die mit diesem Schauspieler verknüpft sind
-        if (actorFilter) {
-            filterArray.push(
-                `id IN (SELECT movieid FROM movie_actor WHERE actorid = $${filterArray.length + 1})`
-            );
-            filterValueArray.push(actorFilter);
-        }
-
         if (filterArray.length > 0) sqlStatement += " WHERE " + filterArray.join(" AND ");
 
         if (sort) {
@@ -41,3 +37,5 @@ router.get("/get-entries", async (req, res) => {
         res.status(500).json({error: "Fehler beim Abrufen der Daten!"});
     }
 });
+
+export default router;

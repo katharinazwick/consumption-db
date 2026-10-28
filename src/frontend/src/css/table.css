@@ -1,0 +1,108 @@
+/* Raster: eine Definition für Kopf und Zeilen */
+body.library { --cols: minmax(0, 5fr) 7.5rem 8rem minmax(0, 3fr) 10.5rem; }
+
+.row {
+    display: grid;
+    grid-template-columns: var(--cols);
+    align-items: center;
+}
+
+.cell {
+    min-width: 0;
+    padding: 12px 14px;
+    text-align: center;
+    color: var(--row-ink);
+    overflow-wrap: anywhere;
+}
+.cell.col-0 { text-align: left; font-weight: 600; }
+.cell.col-3 { text-align: left; }
+
+/* Spaltenkopf bleibt unter der Toolbar kleben */
+.row.head {
+    position: sticky;
+    top: var(--toolbar-h);
+    z-index: 15;
+    margin: 0 -24px;
+    padding: 0 24px;
+    background: var(--paper);
+}
+.head .cell { padding: 10px 14px; overflow-wrap: normal; color: var(--muted); font-size: 13px; font-weight: 700; }
+
+/* Abschnitte je Typ / Universum */
+.section { margin-top: 28px; }
+.section > summary, .section > h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+.section > h2 { cursor: default; }
+.section > summary::-webkit-details-marker { display: none; }
+.section > summary::before {
+    content: "";
+    width: 7px; height: 7px;
+    border-right: 2px solid var(--muted);
+    border-bottom: 2px solid var(--muted);
+    transform: rotate(-45deg);
+    transition: transform .15s;
+}
+.section[open] > summary::before { transform: rotate(45deg); }
+.section h2 { font-size: 1.3rem; font-weight: 700; }
+.count {
+    padding: 1px 10px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.rows {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+.rows:empty::after { content: "No entries"; display: block; padding: 18px; text-align: center; color: var(--muted); }
+
+.rows .row { border-top: 1px solid rgba(28, 36, 56, .12); transition: filter .12s; }
+.rows .row:first-child { border-top: 0; }
+.rows .row:hover { filter: brightness(.96); }
+
+/* Farben wie bisher: jede zweite Zeile steelblue, unvollständige hotpink (hat Vorrang) */
+.library .rows .row:nth-child(odd) { background: var(--row-odd); }
+.library .rows .row.incomplete { background: var(--row-incomplete); }
+
+.cell.col-4 { display: flex; justify-content: center; gap: 2px; }
+
+.desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.desc.expanded { -webkit-line-clamp: unset; }
+.more {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: 600 12px var(--font);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Inline-Bearbeitung */
+.row.editing { outline: 2px solid var(--focus); outline-offset: -2px; }
+.row.editing .cell input, .row.editing .cell select { height: 34px; padding: 0 8px; }
+.row.editing .cell select { padding-right: 28px; }
+
+@media (max-width: 760px) {
+    body.library { --cols: minmax(0, 1fr) 5rem 9.5rem; }
+    .library .cell.col-2, .library .cell.col-3 { display: none; }
+    .row.head { margin: 0 -12px; padding: 0 12px; }
+    .cell { padding: 10px 8px; }
+}

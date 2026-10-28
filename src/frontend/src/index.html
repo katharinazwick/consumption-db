@@ -1,135 +1,83 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>database for media consumption</title>
-    <link rel="stylesheet" href="style/index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Media database</title>
 </head>
-
-<body>
-<div>
-    <h1 id ="firstHeader">database for media consumption</h1>
-</div>
-
-<footer style="margin-top: 40px; text-align: center; font-size: 0.9em;">
-    <p><a href="marvel.html">Marvel Cinemativ Universum</a></p>
-</footer>
+<body class="library">
+<header class="page-header">
+    <h1>Media database</h1>
+    <nav>
+        <a href="index.html" aria-current="page">Library</a>
+        <a href="marvel.html">Marvel Cinematic Universe</a>
+    </nav>
+</header>
 
 <div class="toolbar">
-    <div class="filters">
-        <select id="chooseStream">
-            <option value="">stream</option>
-            <option>Disney</option>
-            <option>Netflix</option>
-            <option>Amazon</option>
-            <option>Spotify</option>
-            <option>Sonstiges</option>
-        </select>
-
-        <select id="chooseTyp">
-            <option value="">typ</option>
-            <option>movie</option>
-            <option>serie</option>
-            <option>audiobook</option>
-            <option>tale</option>
-        </select>
-
-        <select id="incomplete">
-            <option value="">status</option>
-            <option value="false">incomplete</option>
-            <option value="true">complete</option>
-        </select>
-
-        <select id="favourite">
-            <option value="">relationship</option>
-            <option value="true">favourite</option>
-            <option value="false">not favourite</option>
-        </select>
-
-        <select id="actor">
-            <option>actor</option>
-        </select>
-
-        <select id="sort">
-            <option>title ascending</option>
-            <option>title descending</option>
-            <option>viewingyear ascending</option>
-            <option>viewingyear descending</option>
-        </select>
-    </div>
-        <button id="toAdd">add movie</button>
-        <button id="toAddActor">add actor</button>
-</div>
-
-<!--popup-->
-<div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-        <h3>create a new input</h3>
-        <div id="field"></div>
-        <div id="label">
-            <select id="typInput">
-                <option>movie</option>
-                <option>serie</option>
-                <option>audiobook</option>
-                <option>tale</option>
-            </select>
-            <select id="streamInput">
-                <option value="" selected>stream</option>
-                <option>Disney</option>
-                <option>Netflix</option>
-                <option>Amazon</option>
-                <option>Spotify</option>
-                <option>Sonstiges</option>
-            </select>
-            <label for="box">incomplete or need for review:</label>
-            <input type="checkbox" id="box" class="box"></input>
-            <label for="secondBox">favourite:</label>
-            <input type="checkbox" id="secondBox" class="box"></input>
+    <div class="toolbar-left">
+        <div class="filter-wrap">
+            <button id="filterToggle" type="button" class="btn" aria-expanded="false" aria-controls="filterPanel">
+                Filter <span id="filterCount" class="badge" hidden></span>
+            </button>
+            <div id="filterPanel" class="popover"></div>
         </div>
-        <p></p>
-        <button id="close">close</button>
-        <button id="saveInput">save</button>
+        <div id="activeFilters" class="chips"></div>
+    </div>
+    <div class="toolbar-right">
+        <select id="sort" aria-label="Sort"></select>
+        <button id="toAdd" type="button" class="btn btn-primary">add movie</button>
+        <button id="toAddActor" type="button" class="btn btn-primary">add actor</button>
     </div>
 </div>
 
-<!--popup actor-->
-<div class="popup-overlay" id="actorOverlay">
-    <div class="popup">
-        <h3>create a new actor</h3>
-        <div class="suggestWrap">
+<main>
+    <div id="tableHead" class="row head"></div>
+    <div id="table"></div>
+</main>
+
+<!-- Dialog: neuer Eintrag -->
+<div class="overlay" id="addOverlay">
+    <form class="dialog" id="addForm" onsubmit="return false">
+        <h3>New entry</h3>
+        <input id="titleInput" placeholder="title *" autocomplete="off">
+        <textarea id="descriptionInput" placeholder="description" rows="4"></textarea>
+        <input id="viewingYearInput" placeholder="viewing year" inputmode="numeric" class="short">
+        <div class="form-row">
+            <select id="typInput" aria-label="Type"></select>
+            <select id="streamInput" aria-label="Stream"></select>
+        </div>
+        <label class="check"><input type="checkbox" id="incompleteBox"> incomplete or needs review</label>
+        <label class="check"><input type="checkbox" id="favouriteBox"> favourite</label>
+        <div class="dialog-actions">
+            <button type="button" class="btn" data-close>close</button>
+            <button type="button" class="btn btn-primary" id="saveInput">save</button>
+        </div>
+    </form>
+</div>
+
+<!-- Dialog: neuer Schauspieler -->
+<div class="overlay" id="actorOverlay">
+    <div class="dialog">
+        <h3>New actor</h3>
+        <div class="suggest-wrap">
             <input id="actorNameInput" placeholder="name *" autocomplete="off">
             <div id="actorSuggestions" class="suggestions"></div>
         </div>
         <small id="actorHint"></small>
         <div id="actorMovies"></div>
-        <button id="addMovieSelect" type="button">+ movie</button>
-        <p></p>
-        <button id="closeActor">close</button>
-        <button id="saveActor">save</button>
+        <button type="button" id="addMovieSelect" class="btn btn-ghost">+ movie</button>
+        <div class="dialog-actions">
+            <button type="button" class="btn" data-close>close</button>
+            <button type="button" class="btn btn-primary" id="saveActor">save</button>
+        </div>
     </div>
 </div>
 
-
-<p></p>
-
-<div id="container"></div>
-<p></p>
-<div id="table">
-</div>
-
-
-
-<!-- JavaScript-Datei einbinden -->
-<script type="module" src="table/createHeader.js"></script>
-<script type="module" src="popup/createPopup.js"></script>
-<script type="module" src="popup/openPopUp.js"></script>
-<script type="module" src="popup/getDatasFromActorPopup.js"></script>
-<script type="module" src="popup/getDatasFromPopup.js"></script>
-<script type="module" src="popup/actorPopUp.js"></script>
-<script type="module" src="index.js"></script>
-<script type="module" src="table/actorFilter.js"></script>
+<script type="module" src="js/pages/media/main.js"></script>
 </body>
 </html>
-

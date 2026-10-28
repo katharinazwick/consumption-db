@@ -1,0 +1,78 @@
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 38px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+    font: 600 14px var(--font);
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+.btn:hover:not(:disabled) { border-color: #aab5cd; background: #f7f9fd; }
+.btn:disabled { opacity: .45; cursor: default; }
+
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+.btn-ghost { background: transparent; border-color: transparent; color: var(--accent); }
+.btn-ghost:hover:not(:disabled) { background: rgba(40, 55, 110, .08); border-color: transparent; }
+
+.badge {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+}
+
+/* Formularfelder */
+input:not([type="checkbox"]), textarea, select {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--ink);
+    font: 400 14px var(--font);
+}
+textarea { height: auto; padding: 10px 12px; resize: vertical; }
+input::placeholder, textarea::placeholder { color: #8a94ab; }
+
+select {
+    appearance: none;
+    padding-right: 32px;
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%2365708a' stroke-width='2'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E") right 12px center no-repeat;
+    cursor: pointer;
+}
+.toolbar select { width: auto; }
+
+.check { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--accent); cursor: pointer; }
+
+.field { display: grid; gap: 6px; }
+.field > span { font-size: 13px; font-weight: 600; color: var(--muted); }
+
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .15s, transform .1s;
+}
+.icon-btn:hover { background: rgba(255, 255, 255, .65); }
+.icon-btn:active { transform: scale(.9); }

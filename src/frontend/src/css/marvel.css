@@ -1,0 +1,24 @@
+/* Marvel-Seite: gleiches Raster, eigenes Thema mit dem Hintergrundbild */
+body.marvel {
+    --cols: 6rem minmax(0, 1fr) 6.5rem 6.5rem;
+    --row-odd: lightcoral;
+    background: linear-gradient(rgba(14, 18, 34, .78), rgba(14, 18, 34, .78)), url("../assets/marvel.jpg") center / cover fixed;
+    color: #fff;
+}
+
+.marvel .page-header nav a { color: #b9c1d6; }
+.marvel .page-header nav a:hover, .marvel .page-header nav a[aria-current="page"] { color: #fff; }
+.marvel .page-header nav a[aria-current="page"] { border-bottom-color: #fff; }
+
+.marvel .toolbar, .marvel .row.head { background: rgba(14, 18, 34, .85); border-color: rgba(255, 255, 255, .14); }
+.marvel .head .cell { color: #b9c1d6; }
+.marvel .count { background: #fff; color: var(--ink); }
+.marvel .section > h2 { color: #fff; }
+
+/* Marvel hatte bisher nur jede zweite Zeile gefärbt (die gerade) */
+.marvel .rows .row:nth-child(even) { background: var(--row-odd); }
+.marvel .cell.col-0 { text-align: center; font-weight: 400; }
+.marvel .cell.col-1 { text-align: left; font-weight: 600; }
+.marvel .cell.col-3 { display: flex; justify-content: center; gap: 2px; }
+
+.marvel .dialog { color: var(--ink); }
